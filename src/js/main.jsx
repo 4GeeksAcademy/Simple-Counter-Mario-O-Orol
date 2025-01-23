@@ -11,8 +11,29 @@ import '../styles/index.css'
 // components
 import Home from './components/Home';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <Home/>
-  </React.StrictMode>,
-)
+let seconds = 0; // Track the time
+let isRunning = true; // Control whether the timer is running
+
+const stop = () => { isRunning = false; };
+const resume = () => { isRunning = true; };
+const reset = () => {
+    seconds = 0;
+    isRunning = false;
+};
+
+// Function to render the app
+const renderApp = () => {
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<Home seconds={seconds} stop={stop} resume={resume} reset={reset} />);
+};
+
+// Start the timer
+setInterval(() => {
+    if (isRunning) {
+        seconds++;
+    }
+    renderApp();
+}, 1000);
+
+// Initial render
+renderApp();
